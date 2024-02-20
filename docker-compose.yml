@@ -4,15 +4,25 @@ services:
     build: ./load_balancer
     ports:
       - "80:80"
-    deploy:
-      replicas: 1
+    volumes:
+      - ./perl/load_balance.pl:/etc/nginx/load_balance.pl  # Mount the Perl script
+
+  server1:
+    build: ./server
+    ports:
+      - "8001:8000"  # Adjust ports as needed
+
+  server2:
+    build: ./server
+    ports:
+      - "8002:8000"  # Adjust ports as needed
+
+  server3:
+    build: ./server
+    ports:
+      - "8003:8000"  # Adjust ports as needed
 
   client:
     build: ./client
-    deploy:
-      replicas: 5
-
-  server:
-    build: ./server
-    deploy:
-      replicas: 3
+    depends_on:
+      - load_balancer
