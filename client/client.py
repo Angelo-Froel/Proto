@@ -1,18 +1,12 @@
 import requests
 import time
 
-url = 'http://load_balancer'
-
-# Function to send a packet and calculate RTT
-def send_packet():
+def main():
     start_time = time.time()
-    response = requests.get(url)
+    response = requests.get('http://load_balancer')
     end_time = time.time()
-    rtt = end_time - start_time
-    print("Response from server:", response.text)
-    print("Round trip time:", rtt)
+    print("Response:", response.text)
+    print("Round Trip Time:", end_time - start_time)
 
-# Send packets continuously
-while True:
-    send_packet()
-    time.sleep(1)  # Adjust the interval between packets as needed
+if __name__ == "__main__":
+    main()

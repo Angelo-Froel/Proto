@@ -1,28 +1,25 @@
-version: '3.8'
+version: "3"
+
 services:
-  load_balancer:
-    build: ./load_balancer
-    ports:
-      - "80:80"
-    volumes:
-      - ./perl/load_balance.pl:/etc/nginx/load_balance.pl  # Mount the Perl script
+  client:
+    build: ./client
 
   server1:
     build: ./server
     ports:
-      - "8001:8000"  # Adjust ports as needed
+      - "8001:8000"
 
   server2:
     build: ./server
     ports:
-      - "8002:8000"  # Adjust ports as needed
+      - "8002:8000"
 
   server3:
     build: ./server
     ports:
-      - "8003:8000"  # Adjust ports as needed
+      - "8003:8000"
 
-  client:
-    build: ./client
-    depends_on:
-      - load_balancer
+  load_balancer:
+    build: ./load_balancer
+    ports:
+      - "80:80"
