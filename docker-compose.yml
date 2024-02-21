@@ -1,25 +1,36 @@
-version: "3"
-
+version: '3'
 services:
   client:
-    build: ./client
+    build:
+      context: .
+      dockerfile: Dockerfile-client
+    depends_on:
+      - load_balancer
+    networks:
+      - my_network
 
   server1:
-    build: ./server
-    ports:
-      - "8001:8000"
+    build:
+      context: .
+      dockerfile: Dockerfile-server
+    networks:
+      - my_network
 
   server2:
-    build: ./server
-    ports:
-      - "8002:8000"
-
-  server3:
-    build: ./server
-    ports:
-      - "8003:8000"
+    build:
+      context: .
+      dockerfile: Dockerfile-server
+    networks:
+      - my_network
 
   load_balancer:
-    build: ./load_balancer
+    build:
+      context: .
+      dockerfile: Dockerfile-load-balancer
     ports:
       - "80:80"
+    networks:
+      - my_network
+
+networks:
+  my_network:

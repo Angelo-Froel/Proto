@@ -3,7 +3,7 @@ FROM python:3.9-slim
 WORKDIR /client
 
 # Install dependencies
-RUN pip install requests
+RUN pip install aiohttp
 
 COPY client.py .
 
